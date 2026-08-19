@@ -253,14 +253,6 @@ function appendStreamPart(
   return { index: next.length - 1, parts: next }
 }
 
-function completeOpenStreamParts(parts: ChatMessagePart[], completedAt: number): ChatMessagePart[] {
-  return parts.map(part =>
-    (part.type === 'text' || part.type === 'reasoning') && part.completedAt === undefined
-      ? ({ ...part, completedAt } as ChatMessagePart)
-      : part
-  )
-}
-
 export function appendTextPart(parts: ChatMessagePart[], delta: string, timestamp?: number): ChatMessagePart[] {
   return appendStreamPart(parts, 'text', delta, timestamp).parts
 }
