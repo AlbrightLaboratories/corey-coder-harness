@@ -1,7 +1,19 @@
-export * from './hydration'
-export * from './parts'
-export * from './reconciliation'
-export * from './tool-parts'
-// The chat-message timeline model, split by concern. This barrel preserves the
-// historical `@/lib/chat-messages` import path so all 63 consumers are untouched.
-export * from './types'
+export { messageReactions, toChatMessages } from './hydration'
+export {
+  appendAssistantTextPart,
+  appendReasoningPart,
+  appendTextPart,
+  assistantTextPart,
+  chatMessageText,
+  collectUnspokenTurnSpeech,
+  completeOpenTimelineParts,
+  dedupeRepeatedTextInParts,
+  mergeFinalAssistantText,
+  reasoningPart,
+  renderMediaTags,
+  textPart
+} from './parts'
+export type { UnspokenTurnSpeech } from './parts'
+export { branchGroupForUser, preserveLocalAssistantErrors, reconcileLocalAssistantTimeline } from './reconciliation'
+export { hasToolPart, sealOpenToolParts, upsertToolPart } from './tool-parts'
+export type { ChatMessage, ChatMessagePart, GatewayEventPayload, TimelinePartMetadata } from './types'

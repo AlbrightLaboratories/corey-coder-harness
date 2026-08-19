@@ -1,6 +1,4 @@
-import { dedupeGeneratedImageEchoesInParts } from '@/lib/generated-images'
 import { mediaDisplayLabel, mediaMarkdownHref } from '@/lib/media'
-import { parseTodos } from '@/lib/todos'
 
 import type { ChatMessage, ChatMessagePart } from './types'
 
@@ -296,9 +294,3 @@ export function appendAssistantTextPart(
 
   return next
 }
-
-/** Re-export for hydration module (dedupes generated image echoes in one pass). */
-export { dedupeGeneratedImageEchoesInParts }
-
-// Re-export parseTodos for tool-parts module (carry-todos logic).
-export { parseTodos }

@@ -1,12 +1,12 @@
 import { skillInvocationText } from '@hermes/shared'
 
 import { extractImageRefs } from '@/lib/embedded-images'
+import { dedupeGeneratedImageEchoesInParts } from '@/lib/generated-images'
 import type { MessageReaction, SessionMessage } from '@/types/hermes'
 
 import {
   assistantTextPart,
   chatMessageText,
-  dedupeGeneratedImageEchoesInParts,
   dedupeRepeatedTextInParts,
   reasoningPart,
   textPart
