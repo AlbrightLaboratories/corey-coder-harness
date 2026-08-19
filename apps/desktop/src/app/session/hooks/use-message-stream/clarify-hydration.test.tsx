@@ -190,6 +190,7 @@ describe('clarify.request stream hydration', () => {
     })
 
     expect(clarifyParts()).toHaveLength(1)
+    expect($clarifyRequests.get()[SID]?.questions).toHaveLength(2)
   })
 
   it('does not duplicate when the batch clarify.request arrives before tool.start', async () => {
@@ -209,5 +210,6 @@ describe('clarify.request stream hydration', () => {
     })
 
     expect(clarifyParts()).toHaveLength(1)
+    expect($clarifyRequests.get()[SID]?.questions).toHaveLength(2)
   })
 })

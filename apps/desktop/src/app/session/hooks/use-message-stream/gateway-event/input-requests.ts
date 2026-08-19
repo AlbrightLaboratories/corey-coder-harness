@@ -1,5 +1,5 @@
 import { translateNow } from '@/i18n'
-import { normalizeChoices, setClarifyRequest, warnDroppedChoices } from '@/store/clarify'
+import { normalizeChoices, normalizeQuestions, setClarifyRequest, warnDroppedChoices } from '@/store/clarify'
 import { $gateway } from '@/store/gateway'
 import { setMcpSetupRequest } from '@/store/mcp-setup'
 import { dispatchNativeNotification } from '@/store/native-notifications'
@@ -31,8 +31,66 @@ export function handleInputRequestEvent(ctx: GatewayEventContext): boolean {
     const rawChoices = payload?.choices
     const choices = normalizeChoices(rawChoices)
     const multiSelect = payload?.multi_select === true
+    // Batch (multi-question) clarify: `questions` replaces question/choices
+    // on the wire. `answers` rides along only on reconnect replay, carrying
+    // the per-question locks the server already accepted.
+    const questions = normalizeQuestions(payload?.questions)
 
-    if (requestId && question) {
+    const lockedAnswers =
+      typeof payload?.answers === 'object' && payload?.answers !== null
+        ? Object.fromEntries(
+            Object.entries(payload.answers as Record<string, unknown>).filter(
+              (entry): entry is [string, string] => typeof entry[1] === 'string'
+            )
+          )
+        : undefined
+
+    if (requestId && questions.length > 0) {
+      setClarifyRequest({
+        choices: null,
+        lockedAnswers,
+        multiSelect: false,
+        question: '',
+        questions,
+        requestId,
+        sessionId: sessionId ?? null
+      })
+
+      if (sessionId) {
+        // Same hydration-race guard as the single-question path below: the
+        // form mounts from the tool row, so upsert a stable one keyed by
+        // the request id in case tool.start was missed.
+        upsertToolCall(
+          sessionId,
+          {
+            args: {
+              questions: questions.map(q => ({
+                choices: q.choices ?? undefined,
+                multi_select: q.multiSelect || undefined,
+                question: q.question
+              }))
+            },
+            name: 'clarify',
+            tool_id: requestId
+          },
+          'running',
+          event.type,
+          occurredAt
+        )
+        updateSessionState(sessionId, state => ({ ...state, needsInput: true }))
+
+        if (sessionId === activeSessionIdRef.current) {
+          requestScrollToBottom()
+        }
+      }
+
+      dispatchNativeNotification({
+        body: questions.map(q => q.question).join(' · '),
+        kind: 'input',
+        sessionId,
+        title: translateNow('notifications.native.inputTitle')
+      })
+    } else if (requestId && question) {
       if (rawChoices != null && choices.length === 0) {
         warnDroppedChoices('gateway', question, rawChoices)
       }
