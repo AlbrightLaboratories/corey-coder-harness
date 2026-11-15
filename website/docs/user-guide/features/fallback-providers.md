@@ -331,7 +331,7 @@ auxiliary:
   vision:
     base_url: "http://localhost:1234/v1"
     api_key: "local-key"
-    model: "qwen2.5-vl"
+    model: "qwen3-vl"
 ```
 
 `base_url` takes precedence over `provider`. Hermes uses the configured `api_key` for authentication, falling back to `OPENAI_API_KEY` if not set. It does **not** reuse `OPENROUTER_API_KEY` for custom endpoints.

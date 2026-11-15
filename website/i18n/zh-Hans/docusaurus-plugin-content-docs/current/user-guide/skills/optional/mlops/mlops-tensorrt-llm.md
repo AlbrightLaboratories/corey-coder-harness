@@ -187,7 +187,7 @@ outputs = llm.generate(
 
 - **LLaMA 系列**：Llama 2、Llama 3、CodeLlama
 - **GPT 系列**：GPT-2、GPT-J、GPT-NeoX
-- **Qwen**：Qwen、Qwen2、QwQ
+- **Qwen**：Qwen、QwQ
 - **DeepSeek**：DeepSeek-V2、DeepSeek-V3
 - **Mixtral**：Mixtral-8x7B、Mixtral-8x22B
 - **视觉模型**：LLaVA、Phi-3-vision

@@ -101,10 +101,10 @@ else:
 | VRAM     | Max Model Size  | Example Models                              |
 |:---------|:----------------|:--------------------------------------------|
 | CPU only | ~1B params      | GPT-2, TinyLlama, SmolLM                    |
-| 4-8 GB   | ~4B params      | Qwen2.5-1.5B, Phi-3.5 mini, Llama 3.2 3B   |
+| 4-8 GB   | ~4B params      | Qwen3-1.7B, Phi-3.5 mini, Llama 3.2 3B   |
 | 8-16 GB  | ~9B params      | Llama 3.1 8B, Mistral 7B, Gemma 2 9B       |
 | 24 GB    | ~32B params     | Qwen3-32B, Llama 3.1 70B (tight), Command-R |
-| 48 GB+   | ~72B+ params    | Qwen2.5-72B, DeepSeek-R1                    |
+| 48 GB+   | ~72B+ params    | Llama 3.1 70B                              |
 | Multi-GPU| 200B+ params    | Llama 3.1 405B, DeepSeek-V3 (685B MoE)      |
 
 ## Step 3: Browse Available Models & Get Recommendations

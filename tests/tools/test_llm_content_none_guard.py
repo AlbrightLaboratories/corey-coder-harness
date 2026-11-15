@@ -1,7 +1,7 @@
 """Tests for None guard on response.choices[0].message.content.strip().
 
 OpenAI-compatible APIs return ``message.content = None`` when the model
-responds with tool calls only or reasoning-only output (e.g. DeepSeek-R1,
+responds with tool calls only or reasoning-only output (e.g. DeepSeek's R1,
 Qwen-QwQ via OpenRouter with ``reasoning.enabled = True``).  Calling
 ``.strip()`` on ``None`` raises ``AttributeError``.
 

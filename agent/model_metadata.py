@@ -2387,7 +2387,7 @@ def estimate_tokens_rough(text: str) -> int:
     Byte-counting (not chars) is the corrective for non-CJK, non-ASCII text: Cyrillic/Greek/Arabic are 2
     bytes/char so count ~chars/2, matching real BPE cost (~2-3 chars/token) where chars/4 under-counted
     ~2x and let sessions ride the provider ceiling below the compaction threshold. Calibrated vs
-    cl100k/o200k/Qwen2.5 (estimate/real): Russian 0.67->1.24, Arabic 0.53->0.96, Hindi 0.34->0.90,
+    cl100k/o200k/Qwen tokenizers (estimate/real): Russian 0.67->1.24, Arabic 0.53->0.96, Hindi 0.34->0.90,
     Greek 0.37->0.68; accented Latin barely moves (French 1.02->1.03). errors="replace": lone surrogates
     (routine in tool output; see message_sanitization) must not turn an estimate into a raise."""
     if not text:

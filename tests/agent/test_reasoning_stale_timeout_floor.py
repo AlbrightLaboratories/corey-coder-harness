@@ -1,7 +1,7 @@
 """Regression tests for the reasoning-model stale-timeout floor (issue #52217).
 
 Reasoning models (Nemotron 3 Ultra, OpenAI o1/o3, Anthropic Opus 4.x
-thinking, DeepSeek R1, Qwen QwQ, xAI Grok reasoning) routinely exceed
+thinking, DeepSeek's R1 reasoner, Qwen QwQ, xAI Grok reasoning) routinely exceed
 the 180s / 90s chat-model stale-timeout defaults during their
 thinking phase.  Hermes's default cloud-stream stale detector
 (``HERMES_STREAM_STALE_TIMEOUT`` = 180s) and non-stream detector

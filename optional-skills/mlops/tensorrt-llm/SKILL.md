@@ -173,7 +173,7 @@ outputs = llm.generate(
 
 - **LLaMA family**: Llama 2, Llama 3, CodeLlama
 - **GPT family**: GPT-2, GPT-J, GPT-NeoX
-- **Qwen**: Qwen, Qwen2, QwQ
+- **Qwen**: Qwen, QwQ
 - **DeepSeek**: DeepSeek-V2, DeepSeek-V3
 - **Mixtral**: Mixtral-8x7B, Mixtral-8x22B
 - **Vision**: LLaVA, Phi-3-vision

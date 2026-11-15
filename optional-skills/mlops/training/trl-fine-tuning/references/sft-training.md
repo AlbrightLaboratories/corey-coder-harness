@@ -52,15 +52,15 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
 
 # Load model
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-0.5B")
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B")
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3.8-27B")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3.8-27B")
 
 # Load dataset
 dataset = load_dataset("trl-lib/Capybara", split="train")
 
 # Configure
 config = SFTConfig(
-    output_dir="Qwen2.5-SFT",
+    output_dir="Qwen3.8-SFT",
     per_device_train_batch_size=4,
     num_train_epochs=1,
     learning_rate=2e-5,

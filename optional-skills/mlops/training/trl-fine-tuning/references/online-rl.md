@@ -14,7 +14,7 @@ Classic RL algorithm for LLM alignment.
 
 ```bash
 python -m trl.scripts.ppo \
-    --model_name_or_path Qwen/Qwen2.5-0.5B-Instruct \
+    --model_name_or_path Qwen/Qwen3.8-27B \
     --reward_model_path reward-model \
     --dataset_name trl-internal-testing/descriptiveness-sentiment-trl-style \
     --output_dir model-ppo \
@@ -53,7 +53,7 @@ config = GRPOConfig(
 )
 
 trainer = GRPOTrainer(
-    model="Qwen/Qwen2-0.5B-Instruct",
+    model="Qwen/Qwen3.8-27B",
     reward_funcs=reward_func,
     args=config,
     train_dataset=load_dataset("trl-lib/tldr", split="train")

@@ -13,13 +13,14 @@ Adapt this for your specific task by modifying:
 import torch
 import re
 from datasets import load_dataset
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig
 from trl import GRPOTrainer, GRPOConfig
 
 # ==================== CONFIGURATION ====================
 
-MODEL_NAME = "Qwen/Qwen2.5-1.5B-Instruct"
+# Minimum Qwen 3.8 (#1752). 27B needs 4-bit QLoRA on a 32 GB GPU; transformers >= 5.8.
+MODEL_NAME = "Qwen/Qwen3.8-27B"
 OUTPUT_DIR = "outputs/grpo-model"
 MAX_PROMPT_LENGTH = 256
 MAX_COMPLETION_LENGTH = 512
@@ -128,6 +129,10 @@ def setup_model_and_tokenizer():
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_NAME,
         torch_dtype=torch.bfloat16,
+        quantization_config=BitsAndBytesConfig(
+            load_in_4bit=True, bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True,
+        ),
         attn_implementation="flash_attention_2",
         device_map="auto"
     )

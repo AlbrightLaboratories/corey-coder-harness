@@ -854,13 +854,13 @@ class TestDelegationCredentialResolution(unittest.TestCase):
     def test_direct_endpoint_uses_configured_base_url_and_api_key(self):
         parent = _make_mock_parent(depth=0)
         cfg = {
-            "model": "qwen2.5-coder",
+            "model": "corey-coder:latest",
             "provider": "openrouter",
             "base_url": "http://localhost:1234/v1",
             "api_key": "local-key",
         }
         creds = _resolve_delegation_credentials(cfg, parent)
-        self.assertEqual(creds["model"], "qwen2.5-coder")
+        self.assertEqual(creds["model"], "corey-coder:latest")
         self.assertEqual(creds["provider"], "custom")
         self.assertEqual(creds["base_url"], "http://localhost:1234/v1")
         self.assertEqual(creds["api_key"], "local-key")

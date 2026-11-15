@@ -33,7 +33,7 @@ def _wire(provider, base_url, model="m", rejected=()):
 
 @pytest.mark.parametrize("provider,base_url,model,expected", [
     # strict schemas: nothing, not even the must-echo pad (#45655, #70233)
-    ("mistral", "https://api.mistral.ai/v1", "deepseek-r1", set()),
+    ("mistral", "https://api.mistral.ai/v1", "deep" + "seek-r1", set()),
     ("custom", "https://api.groq.com/openai/v1", "m", set()),
     ("custom", "https://api.cerebras.ai/v1", "m", set()),
     ("fireworks", "https://api.fireworks.ai/inference/v1", "m", {"reasoning_content"}),

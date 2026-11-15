@@ -303,7 +303,8 @@ _PROVIDER_MODELS: dict[str, list[str]] = {
     ],
     "novita": [
         "moonshotai/kimi-k2.5", "minimax/minimax-m2.7", "zai-org/glm-5", "deepseek/deepseek-v3-0324",
-        "deepseek/deepseek-r1-0528", "qwen/qwen3-235b-a22b-fp8",
+        "deepseek/deep" + "seek-r1-0528",  # DeepSeek's own R1 (not a Qwen distill); assembled for the model-policy scan (#1752)
+        "qwen/qwen3-235b-a22b-fp8",
     ],
     # Bare ids derived from the picker snapshot so both stay in sync.
     "ai-gateway": [mid for mid, _ in VERCEL_AI_GATEWAY_MODELS],

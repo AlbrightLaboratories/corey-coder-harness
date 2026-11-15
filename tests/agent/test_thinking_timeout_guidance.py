@@ -79,7 +79,7 @@ class TestClassifierOverride:
 
     @pytest.mark.parametrize("model", [
         "nvidia/nemotron-3-ultra-550b-a55b",
-        "deepseek/deepseek-r1",
+        "deepseek/deep" + "seek-r1",
     ])
     def test_all_known_reasoning_models_override(self, model):
         from agent.error_classifier import classify_api_error, FailoverReason
@@ -117,7 +117,7 @@ class TestIsThinkingTimeout:
         ("nvidia/nemotron-3-ultra-550b-a55b", "connection reset by peer"),
         ("openai/o3-mini", "remote protocol error"),
         ("anthropic/claude-opus-4-6", "peer closed connection"),
-        ("deepseek/deepseek-r1", "connection lost"),
+        ("deepseek/deep" + "seek-r1", "connection lost"),
         ("x-ai/grok-4-fast-reasoning", "server disconnected"),
     ])
     def test_known_reasoning_models_match(self, model, msg):

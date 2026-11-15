@@ -45,7 +45,7 @@ pip install trl transformers datasets peft accelerate
 from trl import SFTTrainer
 
 trainer = SFTTrainer(
-    model="Qwen/Qwen2.5-0.5B",
+    model="Qwen/Qwen3.8-27B",
     train_dataset=dataset,  # Prompt-completion pairs
 )
 trainer.train()
@@ -91,15 +91,15 @@ from trl import SFTTrainer, SFTConfig
 from datasets import load_dataset
 
 # Load model
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-0.5B")
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B")
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3.8-27B")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3.8-27B")
 
 # Load instruction dataset
 dataset = load_dataset("trl-lib/Capybara", split="train")
 
 # Configure training
 training_args = SFTConfig(
-    output_dir="Qwen2.5-0.5B-SFT",
+    output_dir="Qwen3.8-27B-SFT",
     per_device_train_batch_size=4,
     num_train_epochs=1,
     learning_rate=2e-5,
@@ -128,17 +128,17 @@ from trl import RewardTrainer, RewardConfig
 
 # Load SFT model as base
 model = AutoModelForSequenceClassification.from_pretrained(
-    "Qwen2.5-0.5B-SFT",
+    "Qwen3.8-27B-SFT",
     num_labels=1  # Single reward score
 )
-tokenizer = AutoTokenizer.from_pretrained("Qwen2.5-0.5B-SFT")
+tokenizer = AutoTokenizer.from_pretrained("Qwen3.8-27B-SFT")
 
 # Load preference data (chosen/rejected pairs)
 dataset = load_dataset("trl-lib/ultrafeedback_binarized", split="train")
 
 # Configure training
 training_args = RewardConfig(
-    output_dir="Qwen2.5-0.5B-Reward",
+    output_dir="Qwen3.8-27B-Reward",
     per_device_train_batch_size=2,
     num_train_epochs=1,
     learning_rate=1e-5
@@ -161,10 +161,10 @@ trainer.save_model()
 
 ```bash
 python -m trl.scripts.ppo \
-    --model_name_or_path Qwen2.5-0.5B-SFT \
-    --reward_model_path Qwen2.5-0.5B-Reward \
+    --model_name_or_path Qwen3.8-27B-SFT \
+    --reward_model_path Qwen3.8-27B-Reward \
     --dataset_name trl-internal-testing/descriptiveness-sentiment-trl-style \
-    --output_dir Qwen2.5-0.5B-PPO \
+    --output_dir Qwen3.8-27B-PPO \
     --learning_rate 3e-6 \
     --per_device_train_batch_size 64 \
     --total_episodes 10000
@@ -176,7 +176,7 @@ python -m trl.scripts.ppo \
 from transformers import pipeline
 
 # Load aligned model
-generator = pipeline("text-generation", model="Qwen2.5-0.5B-PPO")
+generator = pipeline("text-generation", model="Qwen3.8-27B-PPO")
 
 # Test
 prompt = "Explain quantum computing to a 10-year-old"
@@ -224,7 +224,7 @@ dataset = load_dataset("trl-lib/ultrafeedback_binarized", split="train")
 from trl import DPOConfig
 
 config = DPOConfig(
-    output_dir="Qwen2.5-0.5B-DPO",
+    output_dir="Qwen3.8-27B-DPO",
     per_device_train_batch_size=4,
     num_train_epochs=1,
     learning_rate=5e-7,
@@ -241,8 +241,8 @@ config = DPOConfig(
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from trl import DPOTrainer
 
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct")
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct")
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3.8-27B")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3.8-27B")
 
 trainer = DPOTrainer(
     model=model,
@@ -258,9 +258,9 @@ trainer.save_model()
 **CLI 替代方式**：
 ```bash
 trl dpo \
-    --model_name_or_path Qwen/Qwen2.5-0.5B-Instruct \
+    --model_name_or_path Qwen/Qwen3.8-27B \
     --dataset_name argilla/Capybara-Preferences \
-    --output_dir Qwen2.5-0.5B-DPO \
+    --output_dir Qwen3.8-27B-DPO \
     --per_device_train_batch_size 4 \
     --learning_rate 5e-7 \
     --beta 0.1
@@ -323,7 +323,7 @@ def reward_from_model(completions, prompts, **kwargs):
 from trl import GRPOConfig
 
 config = GRPOConfig(
-    output_dir="Qwen2-GRPO",
+    output_dir="Qwen3.8-GRPO",
     per_device_train_batch_size=4,
     num_train_epochs=1,
     learning_rate=1e-5,
@@ -342,7 +342,7 @@ from trl import GRPOTrainer
 dataset = load_dataset("trl-lib/tldr", split="train")
 
 trainer = GRPOTrainer(
-    model="Qwen/Qwen2-0.5B-Instruct",
+    model="Qwen/Qwen3.8-27B",
     reward_funcs=reward_function,  # Your reward function
     args=config,
     train_dataset=dataset
@@ -354,9 +354,9 @@ trainer.train()
 **CLI**：
 ```bash
 trl grpo \
-    --model_name_or_path Qwen/Qwen2-0.5B-Instruct \
+    --model_name_or_path Qwen/Qwen3.8-27B \
     --dataset_name trl-lib/tldr \
-    --output_dir Qwen2-GRPO \
+    --output_dir Qwen3.8-GRPO \
     --num_generations 4
 ```
 

@@ -379,7 +379,7 @@ python train_async.py \
 | Model Family | Configurations |
 |--------------|----------------|
 | GLM | GLM-4.5, GLM-4.6, GLM-4.7, GLM-Z1-9B |
-| Qwen | Qwen3 (4B, 8B, 30B-A3B), Qwen3-MoE, Qwen2.5 |
+| Qwen | Qwen3 (4B, 8B, 30B-A3B), Qwen3-MoE |
 | DeepSeek | V3, V3.1, R1 |
 | Llama | Llama 3 (8B, 70B) |
 | Others | Kimi K2, Moonlight-16B |

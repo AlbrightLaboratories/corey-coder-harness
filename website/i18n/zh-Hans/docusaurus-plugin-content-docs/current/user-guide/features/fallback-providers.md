@@ -282,7 +282,7 @@ auxiliary:
   vision:
     base_url: "http://localhost:1234/v1"
     api_key: "local-key"
-    model: "qwen2.5-vl"
+    model: "qwen3-vl"
 ```
 
 `base_url` 优先于 `provider`。Hermes 使用配置的 `api_key` 进行认证，若未设置则回退到 `OPENAI_API_KEY`。对于自定义端点，**不会**复用 `OPENROUTER_API_KEY`。

@@ -2,7 +2,7 @@
 
 Converse is the bearer-token Claude path and the sticky fallback after a stream-denied AnthropicBedrock
 error, so a Claude turn captured in Anthropic shape (``anthropic_content_blocks``) must keep its signed
-thinking ahead of its toolUse. AWS docs: Claude needs the signature and all previous messages; DeepSeek-R1's
+thinking ahead of its toolUse. AWS docs: Claude needs the signature and all previous messages; DeepSeek's R1
 sample removes prior reasoning; Kimi K3 raises InternalServerException on prior-turn reasoning; non-Claude
 models reject the ``reasoningText.signature`` field.
 """

@@ -114,9 +114,7 @@ model = outlines.models.transformers("mistralai/Mixtral-8x7B-Instruct-v0.1")
 model = outlines.models.transformers("mistralai/Mixtral-8x22B-Instruct-v0.1")
 
 # Qwen (Alibaba)
-model = outlines.models.transformers("Qwen/Qwen2.5-7B-Instruct")
-model = outlines.models.transformers("Qwen/Qwen2.5-14B-Instruct")
-model = outlines.models.transformers("Qwen/Qwen2.5-72B-Instruct")
+model = outlines.models.transformers("Qwen/Qwen3.8-27B")
 
 # Gemma (Google)
 model = outlines.models.transformers("google/gemma-2-9b-it")
@@ -254,7 +252,7 @@ model = outlines.models.llamacpp("mistral-7b-instruct-v0.3.Q4_K_M.gguf")
 model = outlines.models.llamacpp("phi-4-mini-instruct.Q4_K_M.gguf")
 
 # Qwen
-model = outlines.models.llamacpp("qwen2.5-7b-instruct.Q4_K_M.gguf")
+model = outlines.models.llamacpp("qwen3.8-27b.Q4_K_M.gguf")
 ```
 
 ### Apple Silicon Optimization

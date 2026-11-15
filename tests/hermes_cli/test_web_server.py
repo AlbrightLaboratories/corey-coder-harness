@@ -1705,8 +1705,8 @@ CONFIG_SCHEMA = ProviderConfigSchema(
 
         # OpenAI / vLLM / llama.cpp shape.
         assert _parse_model_ids(
-            FakeResp({"data": [{"id": "llama-3.1-8b"}, {"id": "qwen2.5-7b"}]})
-        ) == ["llama-3.1-8b", "qwen2.5-7b"]
+            FakeResp({"data": [{"id": "llama-3.1-8b"}, {"id": "qwen3-8b"}]})
+        ) == ["llama-3.1-8b", "qwen3-8b"]
         # Bare list of ids.
         assert _parse_model_ids(FakeResp({"data": ["m1", "m2"]})) == ["m1", "m2"]
         # Top-level list.
@@ -1874,11 +1874,11 @@ CONFIG_SCHEMA = ProviderConfigSchema(
         saved = self.client.post(
             "/api/providers/custom-endpoints",
             json={"id": dotted, "name": "Local (127.0.0.1:8283)",
-                  "base_url": "http://127.0.0.1:8283/v1", "model": "Qwen2.gguf"},
+                  "base_url": "http://127.0.0.1:8283/v1", "model": "Qwen3.gguf"},
         )
         assert saved.status_code == 200, saved.text
         providers = load_config()["providers"]
-        assert providers[dotted]["model"] == "Qwen2.gguf"
+        assert providers[dotted]["model"] == "Qwen3.gguf"
         assert "local-127-0-0-1-8283" not in providers
 
         for key in (dotted, "EXllamav3"):

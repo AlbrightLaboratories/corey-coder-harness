@@ -729,7 +729,7 @@ Both approaches persist to `config.yaml`, which is the source of truth for model
 Once you have at least one custom endpoint configured, you can switch models mid-session:
 
 ```
-/model custom:qwen-2.5          # Switch to a model on your custom endpoint
+/model custom:qwen3.8          # Switch to a model on your custom endpoint
 /model custom                    # Auto-detect the model from the endpoint
 /model openrouter:claude-sonnet-4 # Switch back to a cloud provider
 ```
@@ -737,7 +737,7 @@ Once you have at least one custom endpoint configured, you can switch models mid
 If you have **named custom providers** configured (see below), use the triple syntax:
 
 ```
-/model custom:local:qwen-2.5    # Use the "local" custom provider with model qwen-2.5
+/model custom:local:qwen3.8    # Use the "local" custom provider with model qwen3.8
 /model custom:work:llama3       # Use the "work" custom provider with llama3
 ```
 
@@ -757,7 +757,7 @@ Everything below follows this same pattern — just change the URL, key, and mod
 
 ```bash
 # Install and run a model
-ollama pull qwen2.5-coder:32b
+ollama pull qwen3.8:latest
 ollama serve   # Starts on port 11434
 ```
 
@@ -768,14 +768,14 @@ hermes model
 # Select "Custom endpoint (self-hosted / VLLM / etc.)"
 # Enter URL: http://localhost:11434/v1
 # Skip API key (Ollama doesn't need one)
-# Enter model name (e.g. qwen2.5-coder:32b)
+# Enter model name (e.g. qwen3.8:latest)
 ```
 
 Or configure `config.yaml` directly:
 
 ```yaml
 model:
-  default: qwen2.5-coder:32b
+  default: qwen3.8:latest
   provider: custom
   base_url: http://localhost:11434/v1
   context_length: 64000   # See warning below
@@ -804,8 +804,8 @@ sudo systemctl edit ollama.service
 # Then: sudo systemctl daemon-reload && sudo systemctl restart ollama
 
 # Option 3: Bake it into a custom model (persistent per-model)
-echo -e "FROM qwen2.5-coder:32b\nPARAMETER num_ctx 64000" > Modelfile
-ollama create qwen2.5-coder-64k -f Modelfile
+echo -e "FROM qwen3.8:latest\nPARAMETER num_ctx 64000" > Modelfile
+ollama create qwen3.8-64k -f Modelfile
 ```
 
 **You cannot set context length through the OpenAI-compatible API** (`/v1/chat/completions`). It must be configured server-side or via a Modelfile. This is the #1 source of confusion when integrating Ollama with tools like Hermes.
@@ -857,7 +857,7 @@ hermes model
 | `--enable-auto-tool-choice` | Required for `tool_choice: "auto"` (the default in Hermes) |
 | `--tool-call-parser <name>` | Parser for the model's tool call format |
 
-Supported parsers: `hermes` (Qwen 2.5, Hermes 2/3), `llama3_json` (Llama 3.x), `mistral`, `deepseek_v3`, `deepseek_v31`, `xlam`, `pythonic`. Without these flags, tool calls won't work — the model will output tool calls as text.
+Supported parsers: `hermes` (Qwen, Hermes 2/3), `llama3_json` (Llama 3.x), `mistral`, `deepseek_v3`, `deepseek_v31`, `xlam`, `pythonic`. Without these flags, tool calls won't work — the model will output tool calls as text.
 
 **Qwen reasoning parsers:** Hermes preserves structured reasoning metadata such as `reasoning`, `reasoning_content`, and streamed reasoning deltas when OpenAI-compatible servers return them. That metadata is treated as reasoning/thinking trace data, not as a replacement for the assistant's visible answer. For Qwen reasoning models served by vLLM, make sure the final user-visible response still appears in `content`. If `--reasoning-parser qwen3` leaves `content` empty in your deployment, either disable that parser or pass a server-supported request option such as `chat_template_kwargs.enable_thinking: false` through `extra_body`.
 
@@ -892,7 +892,7 @@ hermes model
 
 **Context length:** SGLang reads from the model's config by default. Use `--context-length` to override. If you need to exceed the model's declared maximum, set `SGLANG_ALLOW_OVERWRITE_LONGER_CONTEXT_LEN=1`.
 
-**Tool calling:** Use `--tool-call-parser` with the appropriate parser for your model family: `qwen` (Qwen 2.5), `llama3`, `llama4`, `deepseekv3`, `mistral`, `glm`. Without this flag, tool calls come back as plain text.
+**Tool calling:** Use `--tool-call-parser` with the appropriate parser for your model family: `qwen` (Qwen), `llama3`, `llama4`, `deepseekv3`, `mistral`, `glm`. Without this flag, tool calls come back as plain text.
 
 :::caution SGLang defaults to 128 max output tokens
 If responses seem truncated, check the server's generation default and configure it on the server (for example SGLang's `--default-max-tokens`). Hermes does not expose an output-token cap setting.
@@ -911,7 +911,7 @@ cmake -B build && cmake --build build --config Release
   --jinja -fa \
   -c 64000 \
   -ngl 99 \
-  -m models/qwen2.5-coder-32b-instruct-Q4_K_M.gguf \
+  -m models/qwen3.8-27b-Q4_K_M.gguf \
   --port 8080 --host 0.0.0.0
 ```
 
@@ -932,7 +932,7 @@ This saves the endpoint to `config.yaml` so it persists across sessions.
 :::caution `--jinja` is required for tool calling
 Without `--jinja`, llama-server ignores the `tools` parameter entirely. The model will try to call tools by writing JSON in its response text, but Hermes won't recognize it as a tool call — you'll see raw JSON like `{"name": "web_search", ...}` printed as a message instead of an actual search.
 
-Native tool calling support (best performance): Llama 3.x, Qwen 2.5 (including Coder), Hermes 2/3, Mistral, DeepSeek, Functionary. All other models use a generic handler that works but may be less efficient. See the [llama.cpp function calling docs](https://github.com/ggml-org/llama.cpp/blob/master/docs/function-calling.md) for the full list.
+Native tool calling support (best performance): Llama 3.x, Qwen (including Coder), Hermes 2/3, Mistral, DeepSeek, Functionary. All other models use a generic handler that works but may be less efficient. See the [llama.cpp function calling docs](https://github.com/ggml-org/llama.cpp/blob/master/docs/function-calling.md) for the full list.
 
 You can verify tool support is active by checking `http://localhost:8080/props` — the `chat_template` field should be present.
 :::
@@ -951,7 +951,7 @@ Start the server from the LM Studio app (Developer tab → Start Server), or use
 
 ```bash
 lms server start                        # Starts on port 1234
-lms load qwen2.5-coder --context-length 64000
+lms load qwen3.8 --context-length 64000
 ```
 
 Then configure Hermes:
@@ -992,7 +992,7 @@ Set it back to the default explicit preload behavior with:
 hermes config set model.lmstudio_load_mode explicit
 ```
 
-**Tool calling:** Supported since LM Studio 0.3.6. Models with native tool-calling training (Qwen 2.5, Llama 3.x, Mistral, Hermes) are auto-detected and shown with a tool badge. Other models use a generic fallback that may be less reliable.
+**Tool calling:** Supported since LM Studio 0.3.6. Models with native tool-calling training (Qwen, Llama 3.x, Mistral, Hermes) are auto-detected and shown with a tool badge. Other models use a generic fallback that may be less reliable.
 
 ---
 
@@ -1045,7 +1045,7 @@ Use that IP in your Hermes config:
 
 ```yaml
 model:
-  default: qwen2.5-coder:32b
+  default: qwen3.8:latest
   provider: custom
   base_url: http://172.29.192.1:11434/v1   # Windows host IP, not localhost
 ```
@@ -1318,7 +1318,7 @@ providers:
     models:
       qwen3.5:27b:
         context_length: 64000
-      deepseek-r1:70b:
+      qwen3.8:latest:
         context_length: 65536
 ```
 
@@ -1460,7 +1460,7 @@ providers:
 Switch between them mid-session with the triple syntax:
 
 ```
-/model custom:local:qwen-2.5       # Use the "local" endpoint with qwen-2.5
+/model custom:local:qwen3.8       # Use the "local" endpoint with qwen3.8
 /model custom:work:llama3-70b      # Use the "work" endpoint with llama3-70b
 /model custom:anthropic-proxy:claude-sonnet-4  # Use the proxy
 ```

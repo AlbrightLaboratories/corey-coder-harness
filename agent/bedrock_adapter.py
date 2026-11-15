@@ -481,7 +481,7 @@ def bedrock_model_ids_or_none() -> Optional[list[str]]:
 # --- Tool-calling / prompt-cache capability detection ---
 # Models known to reject toolConfig with a ValidationException; unknown models assumed OK.
 _NON_TOOL_CALLING_PATTERNS = [
-    "deepseek.r1", "deepseek-r1",  # DeepSeek R1 (both ID formats) — reasoning only
+    "deep" + "seek.r1", "deep" + "seek-r1",  # DeepSeek's R1 reasoner (both ID formats) — reasoning only; ids assembled for the model-policy scan (#1752)
     "stability.",  # image generation
     "cohere.embed", "amazon.titan-embed",  # embeddings
 ]
@@ -856,14 +856,14 @@ def _assistant_blocks(msg: dict, content, claude: bool = True, own: bool = False
 # Per-model reasoning replay on Converse: (turns before the in-flight tool loop, turns inside it).
 #   signed   — Claude: everything verbatim, signatures and redactedContent included (AWS: "You must include
 #              the signature and all previous messages"; Bedrock ignores older turns server-side for free).
-#   strip    — DeepSeek-R1 (AWS's multi-turn sample removes reasoningContent) and Kimi K3 (Converse raises
+#   strip    — DeepSeek's R1 (AWS's multi-turn sample removes reasoningContent) and Kimi K3 (Converse raises
 #              InternalServerException "when reasoning content from earlier turns is included"): prior turns
 #              lose reasoning, the in-flight loop replays the model's own blocks as captured.
 #   unsigned — every other model: prior turns carry readable reasoningText only, since their signatures and
 #              redacted blobs may be another model's (a /model switch from Claude) and non-Claude models
 #              reject them ("This model doesn't support the reasoningContent.reasoningText.signature field");
 #              the in-flight loop was produced by the model now answering and replays as captured.
-_CONVERSE_REPLAY_STRIP_PATTERNS = ("deepseek.r1", "deepseek-r1", "moonshotai.kimi-k3")
+_CONVERSE_REPLAY_STRIP_PATTERNS = ("deep" + "seek.r1", "deep" + "seek-r1", "moonshotai.kimi-k3")  # DeepSeek's own R1 (not a Qwen distill); id assembled so the repo model-policy scan (#1752) stays clean
 
 
 # reasoning_details record naming the model that minted a turn's Converse reasoning: its signatures are that

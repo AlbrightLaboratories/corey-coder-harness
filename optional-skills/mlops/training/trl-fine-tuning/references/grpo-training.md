@@ -241,7 +241,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import LoraConfig
 from trl import GRPOTrainer
 
-model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+model_name = "Qwen/Qwen3.8-27B"
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype=torch.bfloat16,
@@ -480,7 +480,7 @@ trainer.generate_completions(dataset[:1])
 
 ## Template
 
-A production-ready training script lives at **`../templates/basic_grpo_training.py`**. It uses Qwen 2.5-1.5B-Instruct with LoRA and three reward functions (incremental format, strict format, correctness) on GSM8K. Copy and adapt:
+A production-ready training script lives at **`../templates/basic_grpo_training.py`**. It uses Qwen3.8-27B with LoRA and three reward functions (incremental format, strict format, correctness) on GSM8K. Copy and adapt:
 1. `get_dataset()` — swap in your data loader
 2. Reward functions — tune to your task
 3. `SYSTEM_PROMPT` — match your output format
@@ -490,7 +490,7 @@ A production-ready training script lives at **`../templates/basic_grpo_training.
 
 - TRL GRPO Trainer: https://huggingface.co/docs/trl/grpo_trainer
 - GRPO paper (DeepSeek): https://arxiv.org/abs/2402.03300
-- DeepSeek R1 paper: https://arxiv.org/abs/2501.12948
+- DeepSeek reasoning (R1) paper: https://arxiv.org/abs/2501.12948
 - Open R1 implementation: https://github.com/huggingface/open-r1
 - TRL examples: https://github.com/huggingface/trl/tree/main/examples
 - Unsloth (faster training): https://docs.unsloth.ai/

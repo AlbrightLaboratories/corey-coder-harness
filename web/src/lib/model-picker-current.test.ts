@@ -8,7 +8,7 @@ import {
 } from "./model-picker-current";
 
 const MAIN = { model: "glm-5.3", provider: "zxl" };
-const VISION = { model: "qwen/qwen2.5-flash", provider: "nous" };
+const VISION = { model: "qwen/qwen3-vl-30b", provider: "nous" };
 
 const PROVIDERS = [
   { slug: "zxl", is_current: true },

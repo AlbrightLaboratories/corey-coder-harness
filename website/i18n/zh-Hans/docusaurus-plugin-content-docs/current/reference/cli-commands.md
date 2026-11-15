@@ -184,9 +184,9 @@ hermes model
 /model                              # 显示当前模型和可用选项
 /model claude-sonnet-4              # 切换模型（自动检测 provider）
 /model zai:glm-5                    # 切换 provider 和模型
-/model custom:qwen-2.5              # 在自定义端点上使用模型
+/model custom:qwen3.8              # 在自定义端点上使用模型
 /model custom                       # 从自定义端点自动检测模型
-/model custom:local:qwen-2.5        # 使用命名的自定义 provider
+/model custom:local:qwen3.8        # 使用命名的自定义 provider
 /model openrouter:anthropic/claude-sonnet-4  # 切换回云端
 ```
 

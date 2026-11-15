@@ -39,7 +39,7 @@ As of Transformers 4.40:
 - Falcon
 - GPT-NeoX
 - Phi / Phi-2 / Phi-3
-- Qwen / Qwen2
+- Qwen
 - Gemma
 - Starcoder2
 - GPT-J

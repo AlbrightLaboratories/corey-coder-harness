@@ -222,7 +222,7 @@ lm = Transformers("mistralai/Mistral-7B-Instruct-v0.3")
 lm = Transformers("mistralai/Mixtral-8x7B-Instruct-v0.1")
 
 # Qwen (Alibaba)
-lm = Transformers("Qwen/Qwen2.5-7B-Instruct")
+lm = Transformers("Qwen/Qwen3.8-27B")
 
 # Gemma (Google)
 lm = Transformers("google/gemma-2-9b-it")

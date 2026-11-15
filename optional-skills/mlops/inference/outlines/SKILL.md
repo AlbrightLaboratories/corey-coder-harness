@@ -471,7 +471,7 @@ model = outlines.from_transformers(
 for name in [
     "meta-llama/Llama-3.1-8B-Instruct",
     "mistralai/Mistral-7B-Instruct-v0.3",
-    "Qwen/Qwen2.5-7B-Instruct",
+    "Qwen/Qwen3.8-27B",
 ]:
     model = outlines.from_transformers(
         AutoModelForCausalLM.from_pretrained(name, device_map="auto"),

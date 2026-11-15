@@ -29,7 +29,7 @@ Portal 代理了来自整个生态系统的精选 agentic 模型目录——统�
 | **Anthropic Claude** | Opus、Sonnet、Haiku（4.x 系列） |
 | **OpenAI** | GPT-5.4、o 系列推理模型 |
 | **Google Gemini** | 2.5 Pro、2.5 Flash |
-| **DeepSeek** | DeepSeek V3.2、DeepSeek-R1 |
+| **DeepSeek** | DeepSeek V4 Pro |
 | **Qwen** | Qwen3 系列、Qwen Coder |
 | **Kimi / Moonshot** | Kimi-K2、Kimi-Latest |
 | **GLM / Zhipu** | GLM-4.6、GLM-4-Plus |

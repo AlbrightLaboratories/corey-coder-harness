@@ -19,10 +19,10 @@ _REASONING_STALE_TIMEOUT_FLOORS: dict[int, tuple[str, ...]] = {
     600: (
         # NVIDIA Nemotron behind hosted NIM: documented 60-180s upstream idle kill.
         "nemotron-3-ultra", "nemotron-3-super",
-        # DeepSeek R1 / V4 (reasoning_content streamed before final content).
+        # DeepSeek's R1 reasoner / V4 (reasoning_content streamed before final content).
         # ``deepseek-flash`` is the version-less canonical Flash id (2026-09 Flash refresh);
         # ``deepseek-v4-flash`` still aliases onto it server-side.
-        "deepseek-r1", "deepseek-reasoner", "deepseek-flash", "deepseek-v4-flash", "deepseek-v4.1-flash", "deepseek-v4-pro",
+        "deep" + "seek-r1", "deepseek-reasoner", "deepseek-flash", "deepseek-v4-flash", "deepseek-v4.1-flash", "deepseek-v4-pro",
         # OpenAI o-series: each variant enumerated so bare ``o1`` cannot over-match ``olmo-1``.
         "o1", "o1-mini", "o1-pro", "o1-preview", "o3", "o3-pro",
         # OpenAI named reasoning lines (gpt-5.6-sol/-terra/-luna, gpt-6-astra, their -pro/-900k

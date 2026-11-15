@@ -469,7 +469,7 @@ Hermes 会在每次向 `build.nvidia.com` 发送请求时自动附加 NIM 计费
 
 ```bash
 # GMI Cloud
-hermes chat --provider gmi --model deepseek-ai/DeepSeek-R1
+hermes chat --provider gmi --model deepseek-ai/DeepSeek-V3.2
 # 需要：~/.hermes/.env 中的 GMI_API_KEY
 ```
 
@@ -477,7 +477,7 @@ hermes chat --provider gmi --model deepseek-ai/DeepSeek-R1
 ```yaml
 model:
   provider: "gmi"
-  default: "deepseek-ai/DeepSeek-R1"
+  default: "deepseek-ai/DeepSeek-V3.2"
 ```
 
 基础 URL 可通过 `GMI_BASE_URL` 覆盖（默认：`https://api.gmi-serving.com/v1`）。
@@ -571,7 +571,7 @@ model:
 配置好至少一个自定义端点后，可以在会话中途切换模型：
 
 ```
-/model custom:qwen-2.5          # 切换到自定义端点上的某个模型
+/model custom:qwen3.8          # 切换到自定义端点上的某个模型
 /model custom                    # 从端点自动检测模型
 /model openrouter:claude-sonnet-4 # 切换回云端提供商
 ```
@@ -579,7 +579,7 @@ model:
 如果你配置了**命名自定义提供商**（见下文），使用三段式语法：
 
 ```
-/model custom:local:qwen-2.5    # 使用"local"自定义提供商和 qwen-2.5 模型
+/model custom:local:qwen3.8    # 使用"local"自定义提供商和 qwen3.8 模型
 /model custom:work:llama3       # 使用"work"自定义提供商和 llama3
 ```
 
@@ -599,7 +599,7 @@ model:
 
 ```bash
 # 安装并运行模型
-ollama pull qwen2.5-coder:32b
+ollama pull qwen3.8:latest
 ollama serve   # 在端口 11434 启动
 ```
 
@@ -610,14 +610,14 @@ hermes model
 # 选择"Custom endpoint (self-hosted / VLLM / etc.)"
 # 输入 URL：http://localhost:11434/v1
 # 跳过 API key（Ollama 不需要）
-# 输入模型名称（如 qwen2.5-coder:32b）
+# 输入模型名称（如 qwen3.8:latest）
 ```
 
 或直接配置 `config.yaml`：
 
 ```yaml
 model:
-  default: qwen2.5-coder:32b
+  default: qwen3.8:latest
   provider: custom
   base_url: http://localhost:11434/v1
   context_length: 32768   # 见下方警告
@@ -646,8 +646,8 @@ sudo systemctl edit ollama.service
 # 然后：sudo systemctl daemon-reload && sudo systemctl restart ollama
 
 # 方式 3：烘焙到自定义模型中（每个模型持久生效）
-echo -e "FROM qwen2.5-coder:32b\nPARAMETER num_ctx 32768" > Modelfile
-ollama create qwen2.5-coder-32k -f Modelfile
+echo -e "FROM qwen3.8:latest\nPARAMETER num_ctx 32768" > Modelfile
+ollama create qwen3.8-32k -f Modelfile
 ```
 
 **无法通过 OpenAI 兼容 API**（`/v1/chat/completions`）设置上下文长度。必须在服务端或通过 Modelfile 配置。这是将 Ollama 与 Hermes 等工具集成时最常见的困惑来源。
@@ -699,7 +699,7 @@ hermes model
 | `--enable-auto-tool-choice` | `tool_choice: "auto"` 所必需（Hermes 的默认值） |
 | `--tool-call-parser <name>` | 模型工具调用格式的解析器 |
 
-支持的解析器：`hermes`（Qwen 2.5、Hermes 2/3）、`llama3_json`（Llama 3.x）、`mistral`、`deepseek_v3`、`deepseek_v31`、`xlam`、`pythonic`。没有这些标志，工具调用将无法工作——模型会将工具调用以文本形式输出。
+支持的解析器：`hermes`（Qwen、Hermes 2/3）、`llama3_json`（Llama 3.x）、`mistral`、`deepseek_v3`、`deepseek_v31`、`xlam`、`pythonic`。没有这些标志，工具调用将无法工作——模型会将工具调用以文本形式输出。
 
 :::tip
 vLLM 支持人类可读的大小：`--max-model-len 64k`（小写 k = 1000，大写 K = 1024）。
@@ -732,7 +732,7 @@ hermes model
 
 **上下文长度：** SGLang 默认从模型配置读取。使用 `--context-length` 覆盖。如果需要超过模型声明的最大值，设置 `SGLANG_ALLOW_OVERWRITE_LONGER_CONTEXT_LEN=1`。
 
-**工具调用：** 使用 `--tool-call-parser` 并选择适合你模型系列的解析器：`qwen`（Qwen 2.5）、`llama3`、`llama4`、`deepseekv3`、`mistral`、`glm`。没有此标志，工具调用将以纯文本返回。
+**工具调用：** 使用 `--tool-call-parser` 并选择适合你模型系列的解析器：`qwen`（Qwen）、`llama3`、`llama4`、`deepseekv3`、`mistral`、`glm`。没有此标志，工具调用将以纯文本返回。
 
 :::caution SGLang 默认最大输出 128 tokens
 如果响应看起来被截断，在服务器上设置 `--default-max-tokens`。SGLang 的默认值是每次响应仅 128 tokens（如果请求中未指定）。
@@ -751,7 +751,7 @@ cmake -B build && cmake --build build --config Release
   --jinja -fa \
   -c 32768 \
   -ngl 99 \
-  -m models/qwen2.5-coder-32b-instruct-Q4_K_M.gguf \
+  -m models/qwen3.8-27b-Q4_K_M.gguf \
   --port 8080 --host 0.0.0.0
 ```
 
@@ -772,7 +772,7 @@ hermes model
 :::caution `--jinja` 是工具调用的必要条件
 没有 `--jinja`，llama-server 会完全忽略 `tools` 参数。模型会尝试在响应文本中写入 JSON 来调用工具，但 Hermes 不会将其识别为工具调用——你会看到原始 JSON（如 `{"name": "web_search", ...}`）作为消息打印出来，而不是实际执行搜索。
 
-原生工具调用支持（最佳性能）：Llama 3.x、Qwen 2.5（包括 Coder）、Hermes 2/3、Mistral、DeepSeek、Functionary。其他所有模型使用通用处理器，可以工作但效率可能较低。完整列表参见 [llama.cpp 函数调用文档](https://github.com/ggml-org/llama.cpp/blob/master/docs/function-calling.md)。
+原生工具调用支持（最佳性能）：Llama 3.x、Qwen（包括 Coder）、Hermes 2/3、Mistral、DeepSeek、Functionary。其他所有模型使用通用处理器，可以工作但效率可能较低。完整列表参见 [llama.cpp 函数调用文档](https://github.com/ggml-org/llama.cpp/blob/master/docs/function-calling.md)。
 
 可通过检查 `http://localhost:8080/props` 验证工具支持是否已激活——`chat_template` 字段应存在。
 :::
@@ -791,7 +791,7 @@ hermes model
 
 ```bash
 lms server start                        # 在端口 1234 启动
-lms load qwen2.5-coder --context-length 32768
+lms load qwen3.8 --context-length 32768
 ```
 
 然后配置 Hermes：
@@ -820,7 +820,7 @@ Hermes 会自动以 64K 上下文长度加载 LM Studio 模型。
 设置每个模型的持久默认值：我的模型标签页 → 模型上的齿轮图标 → 设置上下文大小。
 :::
 
-**工具调用：** 自 LM Studio 0.3.6 起支持。具有原生工具调用训练的模型（Qwen 2.5、Llama 3.x、Mistral、Hermes）会被自动检测并显示工具徽章。其他模型使用通用回退，可靠性可能较低。
+**工具调用：** 自 LM Studio 0.3.6 起支持。具有原生工具调用训练的模型（Qwen、Llama 3.x、Mistral、Hermes）会被自动检测并显示工具徽章。其他模型使用通用回退，可靠性可能较低。
 
 ---
 
@@ -873,7 +873,7 @@ ip route show | grep -i default | awk '{ print $3 }'
 
 ```yaml
 model:
-  default: qwen2.5-coder:32b
+  default: qwen3.8:latest
   provider: custom
   base_url: http://172.29.192.1:11434/v1   # Windows 主机 IP，非 localhost
 ```
@@ -1128,7 +1128,7 @@ custom_providers:
     models:
       qwen3.5:27b:
         context_length: 32768
-      deepseek-r1:70b:
+      qwen3.8:latest:
         context_length: 65536
 ```
 
@@ -1186,7 +1186,7 @@ extra_body:
 使用三段式语法在会话中途切换：
 
 ```
-/model custom:local:qwen-2.5       # 使用"local"端点和 qwen-2.5
+/model custom:local:qwen3.8       # 使用"local"端点和 qwen3.8
 /model custom:work:llama3-70b      # 使用"work"端点和 llama3-70b
 /model custom:anthropic-proxy:claude-sonnet-4  # 使用代理
 ```

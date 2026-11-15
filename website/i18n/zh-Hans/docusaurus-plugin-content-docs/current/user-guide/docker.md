@@ -449,7 +449,7 @@ services:
     image: vllm/vllm-openai:latest
     container_name: vllm
     command: >
-      --model Qwen/Qwen2.5-7B-Instruct
+      --model Qwen/Qwen3.8-27B
       --served-model-name my-model
       --host 0.0.0.0
       --port 8000

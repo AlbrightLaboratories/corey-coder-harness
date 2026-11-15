@@ -403,13 +403,13 @@ describe('the current model the catalog omits (#57534)', () => {
       providers: [{ models: ['openai/gpt-4o-mini'], name: 'OpenRouter', slug: 'openrouter' }]
     })
 
-    renderMenu({ model: 'qwen/qwen-2.5-72b-instruct', provider: 'openrouter' })
+    renderMenu({ model: 'qwen/qwen3-32b', provider: 'openrouter' })
 
     // The current model paints as its own family row (humanized name), ahead
     // of the catalog's families, and stays selectable.
-    const row = (await screen.findByText('Qwen 2.5 72B Instruct')).closest('[role="menuitem"]')!
+    const row = (await screen.findByText('Qwen3 32B')).closest('[role="menuitem"]')!
 
-    expect(row.textContent).toContain('Qwen 2.5 72B Instruct')
+    expect(row.textContent).toContain('Qwen3 32B')
   })
 
   it('does not inject the current model into a provider that is not the current one', async () => {
@@ -418,10 +418,10 @@ describe('the current model the catalog omits (#57534)', () => {
       providers: [{ models: ['openai/gpt-4o-mini'], name: 'OpenRouter', slug: 'openrouter' }]
     })
 
-    renderMenu({ model: 'qwen/qwen-2.5-72b-instruct', provider: 'nous' })
+    renderMenu({ model: 'qwen/qwen3-32b', provider: 'nous' })
 
     await screen.findByText('GPT-4o-mini')
-    expect(screen.queryByText('Qwen 2.5 72B Instruct')).toBeNull()
+    expect(screen.queryByText('Qwen3 32B')).toBeNull()
   })
 })
 

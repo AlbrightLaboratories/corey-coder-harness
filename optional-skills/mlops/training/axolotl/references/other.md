@@ -583,7 +583,7 @@ Example 2 (json):
 
 Example 3 (yaml):
 ```yaml
-base_model: Qwen/Qwen2.5-3B
+base_model: Qwen/Qwen3.8-27B
 model_type: AutoModelForTokenClassification
 num_labels: 2
 

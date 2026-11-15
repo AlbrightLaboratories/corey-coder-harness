@@ -35,7 +35,8 @@ This skill should be triggered when:
 
 This skill includes full documentation in `references/`:
 
-- **llms-txt.md** - Llms-Txt documentation
+- **llms.md** - link index of the Unsloth documentation pages
+- Full Unsloth docs (upstream, always current): https://docs.unsloth.ai/llms-full.txt (the 29k-line local copies were removed: their examples named retired pre-3.8 Qwen models)
 
 Use `view` to read specific reference files when detailed information is needed.
 

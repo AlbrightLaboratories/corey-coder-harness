@@ -1315,7 +1315,7 @@ class TestBuildConverseKwargsToolStripping:
     """Test that tools are stripped for non-tool-calling models."""
 
 
-    def test_tools_stripped_for_deepseek_r1(self):
+    def test_tools_stripped_for_deepseek_reasoner(self):
         from agent.bedrock_adapter import build_converse_kwargs
         tools = [{"type": "function", "function": {"name": "test", "description": "t", "parameters": {}}}]
         kwargs = build_converse_kwargs(

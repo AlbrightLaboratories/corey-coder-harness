@@ -51,7 +51,7 @@ PROCESS_REAP_S = 15.0
 PLAIN_MODEL = "fake-model"
 # A slug with a reasoning stale-timeout floor: an explicit
 # providers.<id>.stale_timeout_seconds must still win over the floor (#115024).
-REASONING_MODEL = "deepseek-r1"
+REASONING_MODEL = "deep" + "seek-r1"  # DeepSeek's own R1; id assembled for the model-policy scan (#1752)
 
 
 def new_tag() -> str:

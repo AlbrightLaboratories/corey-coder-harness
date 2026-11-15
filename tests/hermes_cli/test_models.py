@@ -568,9 +568,9 @@ class TestLocalOllamaModelDiscovery:
         """OLLAMA_HOST commonly omits http://; discovery should normalize it."""
         from hermes_cli.models_local import fetch_ollama_local_models
 
-        server, port = _start_fake_ollama_server(models=[{"name": "qwen2.5:1.5b"}])
+        server, port = _start_fake_ollama_server(models=[{"name": "qwen3:4b"}])
         try:
-            assert fetch_ollama_local_models(f"127.0.0.1:{port}/v1") == ["qwen2.5:1.5b"]
+            assert fetch_ollama_local_models(f"127.0.0.1:{port}/v1") == ["qwen3:4b"]
         finally:
             server.shutdown()
 
@@ -578,10 +578,10 @@ class TestLocalOllamaModelDiscovery:
         """Pasted OpenAI-style /v1/models URLs should normalize to the native root."""
         from hermes_cli.models_local import fetch_ollama_local_models
 
-        server, port = _start_fake_ollama_server(models=[{"name": "qwen2.5:1.5b"}])
+        server, port = _start_fake_ollama_server(models=[{"name": "qwen3:4b"}])
         try:
             assert fetch_ollama_local_models(f"127.0.0.1:{port}/v1/models") == [
-                "qwen2.5:1.5b"
+                "qwen3:4b"
             ]
         finally:
             server.shutdown()

@@ -118,7 +118,7 @@ outputs = llm.generate(prompts)
 
 **Best models for drafting**:
 - Target: Llama 3-70B → Draft: Llama 3-8B
-- Target: Qwen2-72B → Draft: Qwen2-7B
+- Target: a large Qwen model → Draft: a small Qwen model with the same tokenizer
 - Same family, 8-10× smaller
 
 ## CUDA Graphs

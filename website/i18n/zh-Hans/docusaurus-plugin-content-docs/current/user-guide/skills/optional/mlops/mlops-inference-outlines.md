@@ -490,7 +490,7 @@ model = outlines.models.transformers(
 # 常用模型
 model = outlines.models.transformers("meta-llama/Llama-3.1-8B-Instruct")
 model = outlines.models.transformers("mistralai/Mistral-7B-Instruct-v0.3")
-model = outlines.models.transformers("Qwen/Qwen2.5-7B-Instruct")
+model = outlines.models.transformers("Qwen/Qwen3.8-27B")
 ```
 
 ### llama.cpp

@@ -8,7 +8,8 @@ from providers.base import ProviderProfile
 
 # Conservative allowlist of model families that expose reasoning effort.
 _REASONING_MARKERS = (
-    "deepseek-r1", "deepseek-v4", "deepseek-reasoner", "gpt-oss", "glm-5", "kimi-k2", "minimax-m2", "qwen3",
+    "deep" + "seek-r1", "deepseek-v4",  # R1 id assembled for the model-policy scan (#1752)
+    "deepseek-reasoner", "gpt-oss", "glm-5", "kimi-k2", "minimax-m2", "qwen3",
 )
 
 

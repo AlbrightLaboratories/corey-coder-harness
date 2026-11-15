@@ -786,7 +786,7 @@ describe('saveOnboardingLocalEndpoint', () => {
       calls.push({ body, path })
 
       if (path === '/api/providers/validate') {
-        return { ok: true, reachable: true, message: '', models: ['llama-3.1-8b', 'qwen2.5-7b'] }
+        return { ok: true, reachable: true, message: '', models: ['llama-3.1-8b', 'qwen3-8b'] }
       }
 
       if (path === '/api/model/set') {

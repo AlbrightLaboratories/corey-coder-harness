@@ -70,7 +70,7 @@ class TestQueryOllamaNumCtx:
     def test_strips_provider_prefix(self):
         """Should strip 'local:' prefix from model name before querying."""
         show_data = {
-            "model_info": {"qwen2.context_length": 32768},
+            "model_info": {"qwen3.context_length": 32768},
             "parameters": "",
         }
         mock_ctx, mock_client = _mock_httpx_client(show_data)
@@ -78,11 +78,11 @@ class TestQueryOllamaNumCtx:
         with patch("agent.model_metadata.detect_local_server_type", return_value="ollama"):
             import httpx
             with patch.object(httpx, "Client", return_value=mock_ctx):
-                result = query_ollama_num_ctx("local:qwen2.5:7b", "http://localhost:11434/v1")
+                result = query_ollama_num_ctx("local:qwen3.8:latest", "http://localhost:11434/v1")
 
         # Verify the post was called with stripped name (no "local:" prefix)
         call_args = mock_client.post.call_args
-        assert call_args.kwargs["json"]["name"] == "qwen2.5:7b"
+        assert call_args.kwargs["json"]["name"] == "qwen3.8:latest"
         assert result == 32768
 
 

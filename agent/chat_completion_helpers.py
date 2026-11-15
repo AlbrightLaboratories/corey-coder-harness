@@ -705,7 +705,7 @@ def _bedrock_reasoning_stale_floor(model_id: object) -> float | None:
 
     ``us.anthropic.claude-opus-4-6-v1:0`` -> strip the region prefix, then try the
     segment after the provider namespace (``claude-opus-4-6-v1:0``) and the id with
-    the provider dot dashed (``deepseek-r1-v1:0``). The floor table mixes dashed
+    the provider dot dashed (``deepseek-v3-v1:0``). The floor table mixes dashed
     and dotted versions while Bedrock always dashes, so each candidate is also
     tried with digit-dash-digit <-> digit-dot-digit swapped (version separators
     only). First non-None wins; None for unknown models.
@@ -721,7 +721,7 @@ def _bedrock_reasoning_stale_floor(model_id: object) -> float | None:
     base_candidates = [name]
     if "." in name:
         base_candidates.append(name.rsplit(".", 1)[1])   # claude-opus-4-6-v1:0
-        base_candidates.append(name.replace(".", "-", 1))  # deepseek-r1-v1:0
+        base_candidates.append(name.replace(".", "-", 1))  # deepseek-v3-v1:0
     candidates = dict.fromkeys(
         form for cand in base_candidates
         for form in (cand, re.sub(r"(?<=\d)-(?=\d)", ".", cand), re.sub(r"(?<=\d)\.(?=\d)", "-", cand)))

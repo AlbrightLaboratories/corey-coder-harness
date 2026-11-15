@@ -2,6 +2,5 @@
 
 ## Categories
 
-### Llms-Txt
-**File:** `llms-txt.md`
-**Pages:** 136
+### Llms
+**File:** `llms.md` (link index; full docs upstream at https://docs.unsloth.ai/llms-full.txt)

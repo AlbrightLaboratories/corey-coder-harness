@@ -18,17 +18,17 @@ from datasets import load_dataset
 
 # Load model (num_labels=1 for single reward score)
 model = AutoModelForSequenceClassification.from_pretrained(
-    "Qwen/Qwen2.5-0.5B-Instruct",
+    "Qwen/Qwen3.8-27B",
     num_labels=1
 )
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3.8-27B")
 
 # Load preference dataset (chosen/rejected pairs)
 dataset = load_dataset("trl-lib/ultrafeedback_binarized", split="train")
 
 # Configure
 config = RewardConfig(
-    output_dir="Qwen2.5-Reward",
+    output_dir="Qwen3.8-Reward",
     per_device_train_batch_size=2,
     num_train_epochs=1,
     learning_rate=1e-5
@@ -72,7 +72,7 @@ Learns to score chosen > rejected.
 from transformers import pipeline
 
 # Load trained reward model
-reward_pipe = pipeline("text-classification", model="Qwen2.5-Reward")
+reward_pipe = pipeline("text-classification", model="Qwen3.8-Reward")
 
 # Score completions
 texts = ["Good answer", "Bad answer"]
@@ -86,7 +86,7 @@ print(scores)  # Higher score = better
 from trl import PPOTrainer, PPOConfig
 
 config = PPOConfig(
-    reward_model_path="Qwen2.5-Reward"  # Use trained reward model
+    reward_model_path="Qwen3.8-Reward"  # Use trained reward model
 )
 
 trainer = PPOTrainer(

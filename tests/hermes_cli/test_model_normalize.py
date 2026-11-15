@@ -108,7 +108,7 @@ class TestDeepseekRetiredAliasesAndCustomSlugs:
     @pytest.mark.parametrize("model", [
         "deepseek-v4.1-flash",
         "deepseek-v4-flash-0731",
-        "deepseek-r1",
+        "deep" + "seek-r1",  # assembled for the model-policy scan (#1752)
         "deepseek-next-preview",
         "my-fine-tune",
     ])

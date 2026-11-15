@@ -86,11 +86,11 @@ a human in a browser.
 1. Human has installed + authorized the daemon (see Prerequisites).
 2. Download and load a model (scriptable once authorized):
    ```bash
-   actual models search "qwen2.5 0.5b instruct gguf" --limit 8 --no-prompt
+   actual models search "qwen3 4b gguf" --limit 8 --no-prompt
    # Downloads REQUIRE an explicit quantization (409 ambiguous_model_download otherwise):
-   actual models download "Qwen/Qwen2.5-0.5B-Instruct-GGUF/Q4_K_M"
+   actual models download "Qwen/Qwen3-4B-GGUF/Q4_K_M"
    actual models list        # note the INSTALLED name (differs from download id)
-   actual models load "qwen2.5-0.5b-instruct-q4_k_m"   # load by installed name
+   actual models load "qwen3-4b-q4_k_m"   # load by installed name
    ```
 3. Point Hermes at the daemon. `ACTUAL_BASE_URL` with a loopback host flips the
    built-in provider into local no-auth mode automatically — no key needed:

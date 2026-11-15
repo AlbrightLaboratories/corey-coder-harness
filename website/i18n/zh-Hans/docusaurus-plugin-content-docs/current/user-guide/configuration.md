@@ -1027,7 +1027,7 @@ auxiliary:
   vision:
     base_url: "http://localhost:1234/v1"
     api_key: "local-key"
-    model: "qwen2.5-vl"
+    model: "qwen3-vl"
 ```
 
 `base_url` 优先于 `provider`，因此这是将辅助任务路由到特定端点的最明确方式。对于直接端点覆盖，Hermes 使用配置的 `api_key` 或回退到 `OPENAI_API_KEY`；它不会为该自定义端点重用 `OPENROUTER_API_KEY`。两者都未设置时，只有当 `base_url` 与主端点的源（scheme、主机和端口）完全相同时，才会重用主模型的密钥。主端点是会话当前运行的端点（`/model` 切换后即为切换后的端点），并且只与它自己的密钥配对，绝不会使用另一个端点的密钥。
