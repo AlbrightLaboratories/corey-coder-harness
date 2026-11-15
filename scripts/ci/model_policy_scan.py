@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Model-policy scanner (Kanboard #482, repo mode #1752).
 
+Vendored into corey-coder-harness (public fork) from claude-conventions@171d9b5; only lint-level edits (re.IGNORECASE, explicit utf-8-sig reads).
 Policy (~/.claude/CLAUDE.md §7.2, 2026-10-24): minimum Qwen 3.8; never deploy a Qwen
 below 3.8 (base, coder, Triton engines) or the R1 distills built on it, or anything older.
 The forbidden names are assembled from fragments below so this file passes its own guard.
@@ -26,11 +27,11 @@ from collections import Counter
 _Q = "qwen"
 _DS = "deep" + "seek"
 FORBIDDEN = [
-    re.compile(_Q + r"[ _-]?2(?:\.5|\.x)?(?![0-9])[-_:/a-z0-9.]*", re.I),  # the 2 / 2.5 / 2.5-coder generations, plain or HF repo ids
-    re.compile(_Q + r"[ _-]?25(?![0-9])[a-z0-9_.-]*", re.I),             # Triton engine names (2.5, 7b, trtllm)
-    re.compile(_DS + r"[-_ ]r1[-_:a-z0-9.]*", re.I),                     # R1 distill tags / engines / HF repos
-    re.compile(r"\br1[-_]distill[-_a-z0-9.]*", re.I),                    # distill names without the vendor prefix
-    re.compile(_DS + r"-cpu[a-z0-9.:_-]*", re.I),                        # the retired CPU R1 service
+    re.compile(_Q + r"[ _-]?2(?:\.5|\.x)?(?![0-9])[-_:/a-z0-9.]*", re.IGNORECASE),  # the 2 / 2.5 / 2.5-coder generations, plain or HF repo ids
+    re.compile(_Q + r"[ _-]?25(?![0-9])[a-z0-9_.-]*", re.IGNORECASE),             # Triton engine names (2.5, 7b, trtllm)
+    re.compile(_DS + r"[-_ ]r1[-_:a-z0-9.]*", re.IGNORECASE),                     # R1 distill tags / engines / HF repos
+    re.compile(r"\br1[-_]distill[-_a-z0-9.]*", re.IGNORECASE),                    # distill names without the vendor prefix
+    re.compile(_DS + r"-cpu[a-z0-9.:_-]*", re.IGNORECASE),                        # the retired CPU R1 service
 ]
 ALLOWED = {
     "corey-coder:latest", "corey-reasoning:latest", "qwen3.8:latest", "qwen3:4b", "gemma4:31b",
@@ -65,7 +66,7 @@ def scan_files(paths) -> list[dict]:
             if SKIP_DIRS & set(inner) or f.suffix.lower() not in SCAN_SUFFIXES:
                 continue
             try:
-                text = f.read_text(errors="ignore")
+                text = f.read_text(encoding="utf-8-sig", errors="ignore")
             except OSError:
                 continue
             for v in violations_in_text(text):
@@ -100,7 +101,7 @@ def _parse_allow(root: pathlib.Path):
     f = root / ALLOW_FILE
     if not f.is_file():
         return allow, bad
-    for n, line in enumerate(f.read_text().splitlines(), 1):
+    for n, line in enumerate(f.read_text(encoding="utf-8-sig").splitlines(), 1):
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         parts = [x.strip() for x in line.split("|", 2)]
@@ -177,7 +178,7 @@ def main(argv=None) -> int:
         vs = scan_repo(a.root); _report(vs, "file")
     else:
         if a.kubectl_json:
-            data = json.loads(pathlib.Path(a.kubectl_json).read_text())
+            data = json.loads(pathlib.Path(a.kubectl_json).read_text(encoding="utf-8-sig"))
         else:
             data = json.loads(subprocess.check_output(["kubectl", "get", "deployments,statefulsets,cronjobs,configmaps", "-A", "-o", "json"]))
         vs = scan_cluster(data, {x for x in a.exclude_ns.split(",") if x}); _report(vs, "namespace")
